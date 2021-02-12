@@ -39,5 +39,28 @@ function Get-UACTranslation {
 ## Finding Unconstrained and Constrained Delgation
 
 ```powershell
-Get-UACTranslation -UAC $adinfo.useraccountcontrol
+$searcher = [adsisearcher]""
+$searcher.Filter = ""
+$adInfo = $searcher.FindAll().properties
+$sams = ($adInfo.samaccountname | Select-String -Pattern "\$")
+foreach ($sam in $sams) {
+    try {
+        $SID =  ([System.Security.Principal.NTAccount] "$env:USERDOMAIN\$sam").Translate([System.Security.Principal.SecurityIdentifier]).Value
+        $searcher2 = [adsisearcher]""
+        $searcher2.Filter = ""
+        $searcher2.SearchRoot = "LDAP://$env:USERDOMAIN/<SID=$SID>"
+        $adInfo2 = $searcher2.FindAll().properties
+        $Props = Get-UACTranslation -UAC $adInfo2.useraccountcontrol
+        $Pname = $adInfo2.name
+        
+        Write-host "Name: $sam"
+        Write-host "Properties: $Props" 
+        Write-host ""
+        
+    } catch {
+        Write-Host "Could not resolve UAC values for: $sam"
+        Write-host ""
+    }
+
+} 
 ```
