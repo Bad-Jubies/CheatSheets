@@ -12,6 +12,7 @@ Reading:
 $SID =  ([System.Security.Principal.NTAccount] "$domain\$username").Translate([System.Security.Principal.SecurityIdentifier]).Value
 # Find all properties for the user with an ADSI Searcher
 $searcher = [adsisearcher]""
+$searcher.Filter = ""
 $searcher.SearchRoot = "LDAP://$domain/<SID=$SID>"
 $adInfo = $searcher.FindAll().properties
 ```
