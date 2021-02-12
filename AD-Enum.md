@@ -18,7 +18,7 @@ $adInfo = $searcher.FindAll().properties
 
 ## User Account Control Translation
 
-````powershell
+```powershell
 function Get-UACTranslation {
   Param ([int]$UAC)
 
