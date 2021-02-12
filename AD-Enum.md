@@ -4,6 +4,9 @@
 
 ## ADSI Searcher
 
+Reading:
+  - [Use the PowerShell [adsiSearcher] Type Accelerator to Search Active Directory](https://devblogs.microsoft.com/scripting/use-the-powershell-adsisearcher-type-accelerator-to-search-active-directory/)
+
 ```powershell
 # Get user's SID
 $SID =  ([System.Security.Principal.NTAccount] "$domain\$username").Translate([System.Security.Principal.SecurityIdentifier]).Value
