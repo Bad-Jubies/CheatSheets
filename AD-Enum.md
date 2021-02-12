@@ -34,3 +34,9 @@ function Get-UACTranslation {
   Return $Attributes
 }
 ```
+
+## Finding Unconstrained and Constrained Delgation
+
+```powershell
+Get-UACTranslation -UAC $adinfo.useraccountcontrol
+```
